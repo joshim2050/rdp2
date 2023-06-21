@@ -1,0 +1,21 @@
+name: CI
+on: [push, workflow_dispatch]
+jobs:
+build:
+runs-on windows-latest
+steps:
+- name: Download
+run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA71aHb/ngrok-stable-windows-amd64.zip -Outrile ngrok.zip
+- name: Extract
+run: Expand-Archive ngrok.zip
+- name: Auth
+run: Angrokingrok.exe authtoken SEnv: NCROK_AUTH_TOKEN
+env:
+NCROK_AUTH_TOKEN: $1 secrets. NCROK_AUTH_TOKEN }]
+- name: Enable TS
+run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server-name "fDenyT5Connections" -Value 0
+- run: Enable-NetfirewallRule -DisplayCroup "Remote Desktop"
+- run: Set-ItemProperty -Path HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations RDP-Tcp -name "UserAuthentication" -Value 1
+- run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Password!" -Force)
+- name: Create Tunnel
+run: ngrokingrok.exe tcp 3389
